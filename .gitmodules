@@ -4,3 +4,6 @@
 [submodule "OverlayPlugin.Core/resources/act-overlays"]
 	path = OverlayPlugin.Core/resources/act-overlays
 	url = https://github.com/cking/act-overlays
+[submodule "overlays"]
+	path = overlays
+	url = https://github.com/awSweeney/FFXIV-ACT-Rainbow-Mage-Overlays.git
