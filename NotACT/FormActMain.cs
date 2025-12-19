@@ -121,7 +121,7 @@ public partial class FormActMain : Form, ISynchronizeInvoke
             }
         }
     }
-    
+
     public DateTime LastEstimatedTime
     {
         get
@@ -184,7 +184,7 @@ public partial class FormActMain : Form, ISynchronizeInvoke
     public event TextToSpeechDelegate TextToSpeech;
 
 
-    public void WriteExceptionLog(Exception ex, string MoreInfo) => 
+    public void WriteExceptionLog(Exception ex, string MoreInfo) =>
         PluginLog.Error(ex, $"[NotAct] {MoreInfo}");
 
     public void OpenLog(bool GetCurrentZone, bool GetCharNameFromFile) { }
@@ -228,6 +228,8 @@ public partial class FormActMain : Form, ISynchronizeInvoke
         if (ActiveZone != null) return;
         ActiveZone = new ZoneData(DateTime.Now, CurrentZone, true, false, false);
         ZoneList.Add(ActiveZone);
+        // Initialize ActiveEncounter so overlays can receive data even when not in combat
+        ActiveZone.ActiveEncounter = ActiveZone.Items[0];
     }
 
     public void ActCommands(string commandText)
@@ -379,7 +381,7 @@ public partial class FormActMain : Form, ISynchronizeInvoke
                     Thread.Sleep(2000);
                     continue;
                 }
-                
+
                 while (LogQueue.TryDequeue(out var line))
                     outputWriter.WriteLine(line);
 
@@ -491,7 +493,7 @@ public partial class FormActMain : Form, ISynchronizeInvoke
         const long billion = 1000000000;
         const long million = 1000000;
         const long thousand = 1000;
-    
+
         switch (Damage)
         {
             case long.MinValue:

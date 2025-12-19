@@ -82,4 +82,15 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="..\resources\**\*">
+            <Link>resources\%(RecursiveDir)%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="..\overlays\**\*" Exclude="..\overlays\.git\**\*">
+            <Link>overlays\%(RecursiveDir)%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
 </Project>

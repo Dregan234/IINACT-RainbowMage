@@ -179,7 +179,7 @@ namespace RainbowMage.OverlayPlugin
                     {
                         registry.RegisterOverlayPreset2(pair);
                     }
-                    
+
                     // Load Rainbow Mage overlays if available
                     try
                     {
@@ -187,22 +187,12 @@ namespace RainbowMage.OverlayPlugin
                         if (File.Exists(rainbowMagePath))
                         {
                             var rainbowMageData = File.ReadAllText(rainbowMagePath);
+                            // Replace {{PLUGIN_DIR}} placeholder with actual plugin directory
+                            rainbowMageData = rainbowMageData.Replace("{{PLUGIN_DIR}}", PluginDirectory.Replace("\\", "/"));
                             var rainbowMageTemplates = JsonConvert.DeserializeObject<OverlayTemplateConfig>(rainbowMageData);
-                            
-                            // Convert file:// URIs to absolute paths
-                            var overlaysDir = Path.Combine(PluginDirectory, "overlays");
+
                             foreach (var template in rainbowMageTemplates.Overlays)
                             {
-                                if (template.Uri.StartsWith("file:///overlays/"))
-                                {
-                                    var relativePath = template.Uri.Substring("file:///overlays/".Length);
-                                    template.Uri = new Uri(Path.Combine(overlaysDir, relativePath)).AbsoluteUri;
-                                }
-                                if (template.PlaintextUri?.StartsWith("file:///overlays/") == true)
-                                {
-                                    var relativePath = template.PlaintextUri.Substring("file:///overlays/".Length);
-                                    template.PlaintextUri = new Uri(Path.Combine(overlaysDir, relativePath)).AbsoluteUri;
-                                }
                                 registry.RegisterOverlayPreset2(template);
                             }
                             _logger.Log(LogLevel.Info, $"Loaded {rainbowMageTemplates.Overlays.Count} Rainbow Mage overlay presets");
@@ -249,7 +239,7 @@ namespace RainbowMage.OverlayPlugin
                     _container.Register<IJobGaugeMemory, JobGaugeMemoryManager>();
 
                     _container.Register(new OverlayPluginLogLines(_container));
-                    
+
                     Status = @"Init Phase 2: Addons";
                     LoadAddons();
 
@@ -262,7 +252,7 @@ namespace RainbowMage.OverlayPlugin
                         InitializeOverlays();
 
                         Status = @"Init Phase 2: Dalamud IPC";
-                        
+
                         _container.Register(new IpcHandlerController(_container));
 
                         // WSServer has to start after the LoadAddons() call because clients can connect immediately
@@ -368,7 +358,7 @@ namespace RainbowMage.OverlayPlugin
 
                 this.Overlays.Clear();
             }
-            
+
             try
             {
                 _container.Resolve<LineCombatant>().Dispose();
@@ -400,7 +390,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 _logger.Log(LogLevel.Error, $"DeInitPlugin: Failed to stop WebSocket server {ex.Message}");
             }
-            
+
             try
             {
                 _container.Resolve<IpcHandlerController>().Dispose();
