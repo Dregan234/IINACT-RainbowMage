@@ -179,6 +179,39 @@ namespace RainbowMage.OverlayPlugin
                     {
                         registry.RegisterOverlayPreset2(pair);
                     }
+                    
+                    // Load Rainbow Mage overlays if available
+                    try
+                    {
+                        var rainbowMagePath = Path.Combine(PluginDirectory, "resources", "rainbow-mage-overlays.json");
+                        if (File.Exists(rainbowMagePath))
+                        {
+                            var rainbowMageData = File.ReadAllText(rainbowMagePath);
+                            var rainbowMageTemplates = JsonConvert.DeserializeObject<OverlayTemplateConfig>(rainbowMageData);
+                            
+                            // Convert file:// URIs to absolute paths
+                            var overlaysDir = Path.Combine(PluginDirectory, "overlays");
+                            foreach (var template in rainbowMageTemplates.Overlays)
+                            {
+                                if (template.Uri.StartsWith("file:///overlays/"))
+                                {
+                                    var relativePath = template.Uri.Substring("file:///overlays/".Length);
+                                    template.Uri = new Uri(Path.Combine(overlaysDir, relativePath)).AbsoluteUri;
+                                }
+                                if (template.PlaintextUri?.StartsWith("file:///overlays/") == true)
+                                {
+                                    var relativePath = template.PlaintextUri.Substring("file:///overlays/".Length);
+                                    template.PlaintextUri = new Uri(Path.Combine(overlaysDir, relativePath)).AbsoluteUri;
+                                }
+                                registry.RegisterOverlayPreset2(template);
+                            }
+                            _logger.Log(LogLevel.Info, $"Loaded {rainbowMageTemplates.Overlays.Count} Rainbow Mage overlay presets");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Log(LogLevel.Warning, $"Failed to load Rainbow Mage overlays: {ex.Message}");
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "overlays": [
+    {
+      "name": "Rainbow Mage - Classic",
+      "plaintext_uri": "file:///overlays/overlays/MiniParseGlow_CritMonitor_Classic.html",
+      "uri": "file:///overlays/overlays/MiniParseGlow_CritMonitor_Classic.html",
+      "suggested_width": 400,
+      "suggested_height": 300,
+      "features": ["modern"]
+    },
+    {
+      "name": "Rainbow Mage - Classic BG",
+      "plaintext_uri": "file:///overlays/overlays/MiniParseGlow_CritMonitor_Classic_BG.html",
+      "uri": "file:///overlays/overlays/MiniParseGlow_CritMonitor_Classic_BG.html",
+      "suggested_width": 400,
+      "suggested_height": 300,
+      "features": ["modern"]
+    },
+    {
+      "name": "Rainbow Mage - HPS MaxHit Highlighted",
+      "plaintext_uri": "file:///overlays/overlays/MiniParseGlow_HPS_MaxHit_HighlightedYou.html",
+      "uri": "file:///overlays/overlays/MiniParseGlow_HPS_MaxHit_HighlightedYou.html",
+      "suggested_width": 500,
+      "suggested_height": 350,
+      "features": ["modern"]
+    },
+    {
+      "name": "Rainbow Mage - HPS MaxHit Highlighted BG",
+      "plaintext_uri": "file:///overlays/overlays/MiniParseGlow_HPS_MaxHit_HighlightedYou_BG.html",
+      "uri": "file:///overlays/overlays/MiniParseGlow_HPS_MaxHit_HighlightedYou_BG.html",
+      "suggested_width": 500,
+      "suggested_height": 350,
+      "features": ["modern"]
+    }
+  ]
+}
