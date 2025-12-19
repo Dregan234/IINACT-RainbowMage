@@ -18,7 +18,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.x
     - name: Download Dalamud
       shell: pwsh
       run: |
@@ -46,8 +46,8 @@ jobs:
         }
         Write-Output "RELEASE_VERSION=$($build.AssemblyVersion)" >> $env:GITHUB_ENV
         $repo.AssemblyVersion = $repo.TestingAssemblyVersion = $build.AssemblyVersion
-        $repo.DownloadLinkInstall = 'https://github.com/marzent/IINACT/releases/download/v' + $repo.AssemblyVersion + '/IINACT.zip'
-        $repo.DownloadLinkTesting =  'https://github.com/marzent/IINACT/releases/download/v' + $repo.TestingAssemblyVersion + '/IINACT.zip'
+        $repo.DownloadLinkInstall = 'https://github.com/Dregan234/IINACT-RainbowMage/releases/download/v' + $repo.AssemblyVersion + '/IINACT.zip'
+        $repo.DownloadLinkTesting =  'https://github.com/Dregan234/IINACT-RainbowMage/releases/download/v' + $repo.TestingAssemblyVersion + '/IINACT.zip'
         $repo.DownloadLinkUpdate = $repo.DownloadLinkInstall
         $repo | ConvertTo-Json | % { "[`n" + $_ + "`n]" } | Set-Content 'repo.json'
     - name: Create Release
@@ -71,7 +71,7 @@ jobs:
         git checkout main
         git add repo.json
         git commit -m "[CI] updating repo.json for ${{ env.RELEASE_VERSION }}" || true
-        git push origin main   
-    
-    
+        git push origin main
+
+
 
